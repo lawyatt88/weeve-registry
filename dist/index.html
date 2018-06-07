@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Weeve Registry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Muli:200,200i,300,300i,400,400i,600,700|Permanent+Marker" rel="stylesheet">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <script defer src="bundle.js"></script>
+</head>
+
+<body>
+    <div id="welcome">
+        <div id="banner" name="banner" class="banner row d-flex align-items-stretch">
+            <div class="banner-text col-12 col-sm-6 col-md-8 d-flex align-items-center">
+                <div>
+                    <h2>
+                        Welcome to the Weeve registry! Looking to register your device? <br>Click
+                        <b>Apply</b>. <br>If you'd like to view the registry, <br>Click <b>View Registry</b>.
+                    </h2>
+                </div>
+            </div>
+            <div class="col-12 d-flex flex-column align-items-center p-2">
+                <button id="view-registry-banner" class="view-registry btn">View Registry</button>
+            </div>
+        </div>
+        <div id="apply-status-info" style="z-index:500">
+            <div id="status-wrapper" class="d-inline-flex p-2 flex-wrap">
+                <div id="status-apply" class="status-block">
+                    <div id="apply-card-wrapper" class="card-wrapper">
+                        <div class="card">
+                            <div id="card-body-hover" class="card-body-hover">
+                                <p class="card-text">{description}</p>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Application</h4>
+                                <p id="apply-status"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="status-verify" class="status-block">
+                    <div id="verify-card-wrapper" class="card-wrapper">
+                        <div class="card">
+                            <div class="card-body-hover">
+                                <p class="card-text">{description}</p>
+                            </div>
+                            <!-- <img class="card-img-top" src={image} alt="Card image cap" /> -->
+                            <!-- <div class="card-img-top"></div> -->
+                            <div id="verify-card-body" class="card-body">
+                                <h4 class="card-title">Verification</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="status-verdict" class="status-block">
+                    <div id="verdict-card-wrapper" class="card-wrapper">
+                        <div class="card">
+                            <div class="card-body-hover">
+                                <p class="card-text">{description}</p>
+                            </div>
+                            <!-- <img class="card-img-top" src={image} alt="Card image cap" /> -->
+                            <!-- <div class="card-img-top"></div> -->
+                            <div class="card-body">
+                                <h4 class="card-title">Verdict</h4>
+                                <p id="verdict"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <svg id="status-curve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:100%;height:100%;z-index:0;position: absolute;">
+            <path id="status-path" stroke-dasharray="1, 5" fill="none" stroke="#200047" stroke-width="2px" />
+        </svg>
+    </div>
+    <div id="apply-wrapper">
+        <!-- <div id="scroll-dummy"></div> -->
+        <div id="apply-wrapper-inner">
+            <div class="apply-scrollbar">
+                <div id="apply-btn-wrapper" class="apply-btn-wrapper d-flex justify-content-end">
+                    <div class="btn-wrapper align-items-center d-flex col-md-2">
+                        <button id="apply-btn" class="btn">Apply</button>
+                    </div>
+                </div>
+                <div id="apply-process-wrapper" class="apply-process-wrapper">
+                    <div id="panel-wrapper">
+                        <div id="apply-form" class="panel show">
+                            <form>
+                                <div class="form-group">
+                                    <label for="name">Device Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter device name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="device-type">Device Type</label>
+                                    <select class="form-control" id="device-type">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="staked-amount">Amount Staked</label>
+                                    <input type="number" class="form-control" id="staked-amount">
+                                </div>
+                                <button id="submit-btn" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                        <div id="verification" class="panel">
+                            <!-- <div style="background-image: url('lit-cube.gif');"><img src='mask-circle.png'></div> -->
+                            <div class="cube">
+                                <div class="magnify"></div>
+                                <figure class="ball bubble"></figure>
+                            </div>
+                            <div class="sexy_line"></div>
+                        </div>
+                        <div id="approval" class="panel text-center">
+                            <h4>Device Added</h4>
+                            <p>Your device data has been verified and added to the Weeve Registry!</p>
+                            <button id="view-registry" class="view-registry btn" onclick="window.location.reload()">View Registry</button>
+                        </div>
+                        <div id="denial" class="panel text-center">
+                            <h4>Device Rejected</h4>
+                            <p>Your device did not pass verification and was not added to the Weeve Registry.</p>
+                            <button id="reapply" class="btn" onclick="window.location.reload()">Re-Apply</button>
+                        </div>
+                    </div>
+                    <svg id="curve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:100%;height:100%;z-index:0;position: absolute;top: 50vh;">
+                        <path id="test" stroke-dasharray="1, 5" fill="none" stroke="#F7C700" stroke-width="2px" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="weeve-registry">
+        <div id="weeve-registry-inner" style="display: none">
+            <div id="weeve-registry-wrapper">
+                <div style="width:100%">
+                    <div class="filter">
+                        <div id="filter-inner">
+                            <div id="filter-wrapper" class="d-inline-flex p-2 flex-wrap">
+                                <div id="type-all" class="filter-type">
+                                    <div id="type-all-card-wrapper" class="card-wrapper">
+                                        <div class="card">
+                                            <div id="card-body-hover" class="filter-card-body-hover">
+                                                <p class="card-text">{description}</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">All Devices</h4>
+                                                <p id="apply-status"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="type-1" class="filter-type">
+                                    <div id="type-1-card-wrapper" class="card-wrapper">
+                                        <div class="card">
+                                            <div class="filter-card-body-hover">
+                                                <p class="card-text">{description}</p>
+                                            </div>
+                                            <div id="verify-card-body" class="card-body">
+                                                <h4 class="card-title">Device Type 1</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="type-2" class="filter-type">
+                                    <div id="type-2-card-wrapper" class="card-wrapper">
+                                        <div class="card">
+                                            <div class="filter-card-body-hover">
+                                                <p class="card-text">{description}</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Device Type 2</h4>
+                                                <p id="verdict"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="type-3" class="filter-type">
+                                    <div id="type-3-card-wrapper" class="card-wrapper">
+                                        <div class="card">
+                                            <div class="filter-card-body-hover">
+                                                <p class="card-text">{description}</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Device Type 3</h4>
+                                                <p id="verdict"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <svg id="filter-curve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="width:100%;z-index:0;position: absolute;">
+                        <path id="filter-path" stroke-dasharray="1, 5" fill="none" stroke="#200047" stroke-width="2px" />
+                    </svg>
+                    <div id="registry-list-wrapper">
+                        <div class="container">
+                            <ul id="registry-list">
+                            </ul>
+                        </div>
+                        <div class="col-12 d-flex flex-column align-items-center p-2">
+                            <button id="register-device" class="btn" onclick="window.location.reload()">Register Device</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    crossorigin="anonymous"></script>
+
+</html>
